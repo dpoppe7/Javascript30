@@ -8,39 +8,39 @@
 </head>
 <body>
     <div class="keys">
-        <div data-key="65" class="key">
+        <div data-key="65" class="key" data-color="#ffff66">
             <kbd>A</kbd>
             <span class="sound">clap</span>
         </div>
-        <div data-key="83" class="key">
+        <div data-key="83" class="key" data-color="#fc6e22">
             <kbd>S</kbd>
             <span class="sound">hihat</span>
         </div>
-        <div data-key="68" class="key">
+        <div data-key="68" class="key" data-color="#ff1493">
             <kbd>D</kbd>
             <span class="sound">kick</span>
         </div>
-        <div data-key="70" class="key">
+        <div data-key="70" class="key" data-color="#c24cf6">
             <kbd>F</kbd>
             <span class="sound">openhat</span>
         </div>
-        <div data-key="71" class="key">
+        <div data-key="71" class="key" data-color="#011ffd">
             <kbd>G</kbd>
             <span class="sound">boom</span>
         </div>
-        <div data-key="72" class="key">
+        <div data-key="72" class="key" data-color="#75d5fd">
             <kbd>H</kbd>
             <span class="sound">ride</span>
         </div>
-        <div data-key="74" class="key">
+        <div data-key="74" class="key" data-color="#8aff00">
             <kbd>J</kbd>
             <span class="sound">snare</span>
         </div>
-        <div data-key="75" class="key">
+        <div data-key="75" class="key" data-color="#ffff66">
             <kbd>K</kbd>
             <span class="sound">tom</span>
         </div>
-        <div data-key="76" class="key">
+        <div data-key="76" class="key" data-color="#ff1493">
             <kbd>L</kbd>
             <span class="sound">tink</span>
         </div>
@@ -57,26 +57,37 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+    function assignColor(color, key){
+        key.style.borderColor = color;
+        key.style.boxShadow = `0 0 1rem ${color}`;
+        key.querySelector('.sound').style.color = color;
+    }
     function playSound(e) {
         // atrribute selector: audio[data-key]
         const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
         const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        const color = key.getAttribute('data-color');
         if (!audio) return; // stop the function from running all together
         audio.currentTime = 0; // rewind to the start
         audio.play();
         key.classList.add('playing');
+        assignColor(color, key);
     }
     function removeTransition(e) {
         if (e.propertyName !== 'transform') return; // skip it if it's not a transform
         this.classList.remove('playing');
-
+        this.style.borderColor = ''; // Reset border color
+        this.style.boxShadow = ''; // Reset box shadow
+        this.querySelector('.sound').style.color = ''; // Reset sound color
     }
 
+
+     // TODO: Create and position a sound wave element with an animation of a moving 
+    // wave while many keys are pressed.
     const keys = document.querySelectorAll('.key');
     keys.forEach(key => key.addEventListener('transitionend', removeTransition));  
     window.addEventListener('keydown', playSound);
 </script>
-
 
 </body>
 </html>
