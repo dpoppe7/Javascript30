@@ -3,9 +3,11 @@ function assignColor(color, key){
     key.style.boxShadow = `0 0 1rem ${color}`;
 }
 function playSound(e) {
-    // atrribute selector: audio[data-key]
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    // Determines the key code from either the keyboard event (e.keyCode) or the click event (e.target.closest
+    const keyCode = e.keyCode || e.target.closest('.key').getAttribute('data-key');
+    if (!keyCode) return; // stop function if no valid keyCode is found
+    const audio = document.querySelector(`audio[data-key="${keyCode}"]`); // atrribute selector: audio[data-key]
+    const key = document.querySelector(`.key[data-key="${keyCode}"]`);
     const color = key.getAttribute('data-color');
     if (!audio) return; // stop the function from running all together
     audio.currentTime = 0; // rewind to the start
@@ -32,5 +34,8 @@ function setInitialColors(){
 
 setInitialColors();
 const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('transitionend', removeTransition));  
+keys.forEach(key => {
+    key.addEventListener('transitionend', removeTransition);
+    key.addEventListener('click', playSound);
+}); 
 window.addEventListener('keydown', playSound);
