@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+    <link rel="icon" href="https://fav.farm/🕒" />
+</head>
+<body>
+    <dotlottie-wc class="animation-bg" src="https://lottie.host/f3064d01-6cc7-4faa-9878-68f83856b1f7/KHCYUAEQr3.lottie" autoplay loop></dotlottie-wc>
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+    <style>
+        html {
+            background: #000000 url(https://images.unsplash.com/photo-1520034475321-cbe63696469a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGFyayUyMHNreSUyMHdpdGglMjBzdGFyc3xlbnwwfHwwfHx8MA%3D%3D);
+            opacity: 0.7;
+            background-size: cover;
+            font-family: 'helvetica neue';
+            text-align: center;
+            font-size: 10px;
+        }
+
+        body {
+            margin: 0;
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
+        }
+        .animation-bg {
+            background-size: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(180deg);
+        }
+
+        .clock {
+            width: 30rem;
+            height: 30rem;
+            background-color: rgba(255, 255, 255, 0.156);
+            border: 1px solid white;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem;
+            box-shadow:
+            0 0 0 4px rgba(0,0,0,0.1),
+            inset 0 0 0 3px #EFEFEF,
+            inset 0 0 10px black,
+            0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .clock-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-3px); /* account for the height of the clock hands */
+        }
+
+        .hand {
+            width: 50%;
+            background: #EFEFEF;
+            position: absolute;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transition-timing-function: cubic-bezier(0.42, 0, 0.59, 1.63);
+            z-index: -1;
+        }
+
+        .hour-hand { height: 5px; }
+        .min-hand { height: 2.5px; }
+        .second-hand { height: 2px; background: rgb(230, 254, 15); }
+
+        .num {
+            color: #EFEFEF;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
+
+    <script>
+        const secondHand = document.querySelector('.second-hand');
+        const minHand = document.querySelector('.min-hand');
+        const hourHand = document.querySelector('.hour-hand');
+        
+        function setDate(){
+            const now = new Date();
+
+            const seconds = now.getSeconds();
+            const secondsDegrees = ((seconds / 60) * 360) + 90;
+            secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+            secondHand.classList.add('second-hand');
+
+            const mins = now.getMinutes();
+            const minsDegrees = ((mins / 60) * 360) + 90;
+            minHand.style.transform = `rotate(${minsDegrees}deg)`;
+            minHand.classList.add('min-hand');
+
+            const hours = now.getHours();
+            const hoursDegrees = ((hours/12) * 360) + 90;
+            hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+            hourHand.classList.add('hour-hand');
+
+            // remove transition when hand is at 0 and add it back when it's not
+            secondHand.style.transition = (seconds === 0) ? 'none' : '';
+            minHand.style.transition = (mins === 0) ? 'none' : '';
+            hourHand.style.transition = (hours === 0) ? 'none' : '';
+        }
+        setInterval(setDate, 1000);
+
+
+        function setClockNums(){
+            const clockFace = document.querySelector('.clock-face');
+            const radius = 47;
+            
+            for(let i = 1; i <= 12; i++){
+                const num = document.createElement('div');
+                num.classList.add('num');
+                num.innerHTML = i;
+                const angle = ((i - 3)*30) * (Math.PI / 180); //radiants
+                const x = 50 + radius * Math.cos(angle);
+                const y = 50 + radius * Math.sin(angle);
+                num.style.left = `${x}%`;
+                num.style.top = `${y}%`;
+                clockFace.appendChild(num);
+            }
+        }
+        setClockNums();
+    </script>
+</body>
+</html>

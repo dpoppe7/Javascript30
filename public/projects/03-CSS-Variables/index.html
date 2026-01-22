@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoped CSS Variables and JS</title>
+    <link rel="icon" href="https://fav.farm/🎨" />
+</head>
+<body>
+    <h2>CSS <span class='hl'>Playground</span></h2>
+    <p class="font-regular">(Updating CSS Variables with JS)</p>
+
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input id="spacing" type="range" name="spacing" min="10" max="80" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input id="blur" type="range" name="blur" min="0" max="10" value="0" data-sizing="px">
+
+        <label for="base">Base Color</label>
+        <input id="base" type="color" name="base" value="#f63468">
+    </div>
+
+    <img src="https://blog.pond5.com/wp-content/uploads/sites/5/2024/10/Blog_header-japanesecitypop.jpg">
+
+    <style>
+
+    :root {
+        --base: #f63468;
+        --spacing: 10px;
+        --blur: 0px;
+    }
+
+    body {
+        /* position center */
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background: #0f212f;
+        color: white;
+        font-family: 'helvetica neue', sans-serif;
+        font-weight: 200;
+        font-size: 28px;
+    }
+
+    img {
+        padding: var(--spacing); 
+        filter: blur(var(--blur));
+        background: var(--base);
+        margin-top: 20px;
+        width: 50%;
+    }
+
+    .font-regular {
+        font-weight: 200;
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .controls {
+        margin-bottom: 50px;
+    }
+
+    .hl {
+        color: var(--base);
+    }
+
+    input {
+        width: 100px;
+    }
+
+    @media screen and (max-width: 600px) {
+        body {
+            font-size: 18px;
+        }
+        .controls {
+            margin-bottom: 30px;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+    </style>
+
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+
+        function handleUpdate() {
+            // console log the id property  of the event this
+            console.log(this.id, this.name, this.value);
+
+            //data set is a map of all the data attributes on the element: example data-sizing, can create your own, data-foo="bar" in html
+            console.log(this.dataset); // DOMStringMap {sizing:"px"} or DOMStringMap {}, color doesnt have data-sizing
+            const suffix = this.dataset.sizing || ''; // if there is no sizing property, return an empty string
+            
+            // change the spacing property of the :root styles
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+
+            // instead of doing this:
+            // if (this.id === 'spacing') {
+            //     document.documentElement.style.setProperty('--spacing', `${this.value}px`);
+            //     console.log(document.documentElement.style.getPropertyValue('--spacing'));
+            // }   
+        }
+        // add event listener for range input that updates the spacing padding property when dragged in range
+        inputs.forEach(input => input.addEventListener('change', handleUpdate));
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    </script>
+</body>
+</html>
