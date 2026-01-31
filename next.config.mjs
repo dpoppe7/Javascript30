@@ -1,13 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/projects/:path*',
-        destination: '/projects/:path*',
-      },
-    ];
-  },
+  // no rewrites needed for static html files
 };
 
 export default nextConfig;
