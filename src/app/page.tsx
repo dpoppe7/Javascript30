@@ -1,4 +1,4 @@
-"use client";
+"use client"; // this page uses client components
 
 import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,61 +41,87 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="text-center space-y-6">
+      {/* ONE WRAPPER TO RULE  ALL */}
+      <main className="max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-20 py-12 space-y-12">
+        
+        {/* Header Section */}
+        <header className="space-y-4 text-center">
           <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            JavaScript30 Showcase
+            JavaScript30
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            A collection of 30 vanilla JavaScript projects. Explore interactive demos and learn modern web development.
+          <p className="text-muted-foreground text-base md:text-xl max-w-3xl mx-auto">
+            An interactive showcase of my implementations for {" "}
+            <a 
+              href="https://javascript30.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-foreground font-medium hover:text-primary transition-all"
+            >
+              WesBos vanilla JS challenge.
+            </a>
           </p>
-        </div>
-      </section>
+        </header>
 
-      {/* Filter Area */}
-      <section className="container mx-auto px-4 pb-8">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="w-full md:w-1/2">
-            <Input
-              type="text"
-              placeholder="Search projects..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full"
-            />
-          </div>
-          <div className="w-full md:w-48">
-            <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="id">Project Number</SelectItem>
-                <SelectItem value="name">Name</SelectItem>
-                <SelectItem value="difficulty">Difficulty</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        {/* Filter Area: Flexbox */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-card/30 p-4 rounded-xl border border-border/50">
+          <Input
+            placeholder="Search projects..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="sm:max-w-md"
+          />
+          <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+            <SelectTrigger className="w-full sm:w-[180px]">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="id">Project #</SelectItem>
+              <SelectItem value="name">Name</SelectItem>
+              <SelectItem value="difficulty">Difficulty</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-      </section>
 
-      {/* Project Grid */}
-      <section className="container mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredAndSortedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-        {filteredAndSortedProjects.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">No projects found matching your search.</p>
+        {/* Project Grid */}
+        {filteredAndSortedProjects.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredAndSortedProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 border-2 border-dashed border-border rounded-2xl">
+            <p className="text-muted-foreground">No matches found for "{searchQuery}"</p>
           </div>
         )}
-      </section>
 
-      {/* ASCII Effect Footer */}
-      <ASCIIEffect />
+      </main>
+
+      <footer className="mt-20 border-t border-border/40 bg-card/10 pb-16 pt-10">
+      <div className="max-w-7xl mx-auto px-6 text-center space-y-16 flex flex-col items-center">          
+          {/* Animated Divider */}
+          <ASCIIEffect />
+          
+          <div className="space-y-2">
+            <p className="text-muted-foreground text-sm tracking-wide">
+              Made with ❤️ by{" "}
+              <a 
+                href="https://damarisc.netlify.app/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-foreground font-medium hover:text-primary transition-all"
+              >
+                Damaris Poppe
+              </a>
+            </p>
+            
+            <p className="text-xs text-muted-foreground/60">
+              © {new Date().getFullYear()} — Built with Next.js & Tailwind CSS
+            </p>
+          </div>
+          
+        </div>
+      </footer>
     </div>
   );
 }

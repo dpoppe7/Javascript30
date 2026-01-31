@@ -7,79 +7,46 @@ const symbols = [".", ":", ".", ":", "."];
 
 export default function ASCIIEffect() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const generateMaze = () => {
+    // fixed, centered decoration
+    const rows = 1; 
+    // fixed number of columns so it stays centered and doesn't stretch to the edges
+    const cols = 50;
+
+    const generateFrame = () => {
       if (!containerRef.current) return;
-
-      const cols = Math.floor(window.innerWidth / 25);
-      const rows = 20; // Fixed number of rows for footer effect
       
-      // Clear previous content
-      containerRef.current.innerHTML = "";
-
-      // Create document fragment for better performance
-      const fragment = document.createDocumentFragment();
-
+      let content = "";
       for (let i = 0; i < rows; i++) {
+        let line = "";
         for (let j = 0; j < cols; j++) {
-          const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-          const randomColor = colors[Math.floor(Math.random() * colors.length)];
-          
-          const span = document.createElement("span");
-          span.style.color = randomColor;
-          span.textContent = randomSymbol;
-          fragment.appendChild(span);
+          const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          line += `<span style="color: ${color}">${symbol}</span>`;
         }
+        content += line + "\n";
       }
-
-      containerRef.current.appendChild(fragment);
+      containerRef.current.innerHTML = content;
     };
 
-    const handleResize = () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      
-      animationFrameRef.current = requestAnimationFrame(() => {
-        generateMaze();
-      });
-    };
+    // Update every 150ms for a steady "flicker" effect
+    const interval = setInterval(generateFrame, 150);
 
-    // Initial generation
-    generateMaze();
-
-    // Handle window resize
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden">
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-10 pointer-events-none" />
-      
-      {/* ASCII content */}
-      <div
+    <div
         ref={containerRef}
-        id="ascii-rain"
-        className="relative w-full pointer-events-none"
+        className="select-none cursor-default text-center"
         style={{
-          fontFamily: "monospace",
+          fontFamily: "'Courier New', monospace",
           fontSize: "20px",
           lineHeight: "1.2",
           whiteSpace: "pre",
-          minHeight: "500px",
+          width: "fit-content",
         }}
-      />
-    </div>
+    ></div>
   );
 }
