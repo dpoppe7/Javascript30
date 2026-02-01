@@ -144,13 +144,13 @@ export default function Home() {
 
 function ProjectCard({ project }: { project: Project }) {
   // image url named after project folder
-  const imageUrl = `/projects/${project.folderName}/preview.jpg`;
+  const imageUrl = `/cardCovers/${project.folderName}/preview.png`;
   const projectUrl = `/projects/${project.folderName}/index.html`;
 
   return (
     <Card className="border-border/50 bg-background/60 backdrop-blur-md hover:border-primary/50 transition-all">
       {/* top image of a Card (Margin to Margin) */}
-      <div className="w-full h-[120px] overflow-hidden border-b border-border/50">
+      <div className="w-full h-[120px] rounded-t-xl overflow-hidden border-b border-border/50">
         <img 
           src={imageUrl} 
           alt={project.title} 
