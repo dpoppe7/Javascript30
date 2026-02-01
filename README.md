@@ -3,7 +3,7 @@
 
 **Live Demo**: 
 
-![Preview](/images/display1.png)
+<img src="images/display1.png" alt="Display 1" width="500" height="300">
 
 ### ✨ Technical Mastery/Projects Breakdown
 Across these 30 projects, I practiced fundamental pillars of modern web development:
