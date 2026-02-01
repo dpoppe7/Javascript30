@@ -41,26 +41,42 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ONE WRAPPER TO RULE  ALL */}
-      <main className="max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-20 py-12 space-y-12">
-        
-        {/* Header Section */}
-        <header className="space-y-4 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+      {/* hero section */}
+      <section className="relative w-full h-[320px] md:h-[425px] overflow-hidden flex items-center">
+        {/* Background Animation with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/hero-bg2.jpg" 
+            alt="Background" 
+            className="w-full h-full object-cover opacity-100" 
+          />
+          <div className="absolute inset-0 bg-background/60" /> 
+        </div>
+
+        {/* 2. Header Content */}
+        {/* Changed text-right to text-left */}
+        <header className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-20 text-left space-y-4">
+          <h1 className="font-pixel animate-pulse text-xl md:text-4xl text-white -tracking-tighter py-4 drop-shadow-[4px_4px_0px_#aa72c5]">
             JavaScript30
           </h1>
-          <p className="text-muted-foreground text-base md:text-xl max-w-3xl mx-auto">
+          
+          {/* Changed ml-auto to mr-auto to keep the paragraph aligned left */}
+          <p className="text-muted-foreground text-base md:text-xl max-w-lg mr-auto">
             An interactive showcase of my implementations for {" "}
             <a 
               href="https://javascript30.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-foreground font-medium hover:text-primary transition-all"
+              className="text-foreground font-medium hover:text-primary transition-all underline underline-offset-4"
             >
               WesBos vanilla JS challenge.
             </a>
           </p>
         </header>
+      </section>
+
+      {/* ONE WRAPPER TO RULE  ALL */}
+      <main className="max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-20 py-12 space-y-12">
 
         {/* Filter Area: Flexbox */}
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-card/30 p-4 rounded-xl border border-border/50">
@@ -127,16 +143,30 @@ export default function Home() {
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  // image url named after project folder
+  const imageUrl = `/projects/${project.folderName}/preview.jpg`;
   const projectUrl = `/projects/${project.folderName}/index.html`;
 
   return (
     <Card className="border-border/50 bg-background/60 backdrop-blur-md hover:border-primary/50 transition-all">
-      <CardHeader>
+      {/* top image of a Card (Margin to Margin) */}
+      <div className="w-full h-[120px] overflow-hidden border-b border-border/50">
+        <img 
+          src={imageUrl} 
+          alt={project.title} 
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          // If image fails, it shows a solid primary color
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "https://placehold.co/600x400/262135/ffffff";
+          }}
+        />
+      </div>
+      {/* Content Below Image */}
+      <CardHeader className="space-y-1">
         <div className="flex items-start justify-between">
           <CardTitle className="text-2xl">{project.title}</CardTitle>
           <Badge variant="secondary">{project.difficulty}</Badge>
         </div>
-        <CardDescription className="line-clamp-2">{project.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-2">
