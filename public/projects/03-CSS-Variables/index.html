@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoped CSS Variables and JS</title>
+    <link rel="icon" href="https://fav.farm/🎨" />
+    <link rel="stylesheet" href="/shared-styles.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <main class="wrapper">
+
+        <div class="content">
+            <h1>CSS Playground</h1>
+            <h2 class="instruction">
+                Updating CSS Variables with JavaScript.
+            </h2>
+        </div>
+
+        <div class="controls">
+            <label for="spacing">Spacing:</label>
+            <input id="spacing" type="range" name="spacing" min="10" max="80" value="10" data-sizing="px">
+
+            <label for="blur">Blur:</label>
+            <input id="blur" type="range" name="blur" min="0" max="10" value="0" data-sizing="px">
+
+            <label for="base">Base Color</label>
+            <input id="base" type="color" name="base" value="#f63468">
+        </div>
+
+        <img src="https://blog.pond5.com/wp-content/uploads/sites/5/2024/10/Blog_header-japanesecitypop.jpg">
+    </main>
+    <script src="./script.js"></script>
+</body>
+</html>

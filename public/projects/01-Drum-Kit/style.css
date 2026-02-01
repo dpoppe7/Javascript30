@@ -1,0 +1,79 @@
+html {
+    background: url('./images/background-drum.jpg') center center no-repeat;
+    background-size: cover;
+}
+
+/* Drum Keys Logic */
+.keys {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 4rem 4rem;
+}
+  
+.key {
+    border: .4rem solid black;
+    border-radius: .5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    padding: 1rem .5rem;
+    transition: all .09s ease;
+    width: 10rem;
+    text-align: center;
+    color: white;
+    background: rgba(81, 81, 81, 0.4);
+    text-shadow: 0 0 .5rem black;
+}
+  
+.playing {
+    transform: scale(1.1);
+}
+  
+kbd {
+    display: block;
+    font-size: 4rem;
+}
+  
+.sound {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+}
+
+/* Lottie player styling */
+#lottie-player {
+    position: relative;
+    margin: 0 auto;
+    width: 16%;
+    max-width: 150px;
+    height: auto;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    #lottie-player {
+        width: 25%;
+    }
+
+    .keys {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .key {
+        width: 8rem;/* Adjusted width to fit*/
+        margin: 0.5rem;
+    }
+
+    kbd {
+        font-size: 2rem;
+    }
+
+    .sound {
+        font-size: 0.8rem;
+    }
+}
