@@ -11,7 +11,7 @@ export const projects: Project[] = [
   {
     id: "01",
     title: "Drum Kit",
-    description: "An interactive drum kit that responds to keyboard input. Press keys A through L to play different drum sounds. Features colorful visual feedback and smooth animations when keys are pressed.",
+    description: "An interactive drum kit that responds to keyboard input. Key features include: dynamic UI state toggling, data-key mapping for input synchronization, and optimized CSS transitions.",
     folderName: "01-Drum-Kit",
     tags: ["Audio", "Events", "DOM"],
     difficulty: "Beginner",
@@ -19,7 +19,7 @@ export const projects: Project[] = [
   {
     id: "02",
     title: "Clock",
-    description: "A beautiful analog clock with real-time updates. Features smooth hand animations and a stunning background. Demonstrates Date object manipulation and CSS transforms.",
+    description: "A beautiful analog clock with real-time updates. Demonstrates Date object manipulation and CSS transforms.",
     folderName: "02-Clock",
     tags: ["Date", "CSS", "Animation"],
     difficulty: "Beginner",
@@ -27,7 +27,7 @@ export const projects: Project[] = [
   {
     id: "03",
     title: "CSS Variables",
-    description: "A dynamic image editor that uses CSS custom properties (variables) to control spacing, blur, and base color. Real-time updates demonstrate the power of CSS variables with JavaScript.",
+    description: "Live style manipulation using CSS variables. Demonstrates DOM events and CSS custom properties to control spacing, blur, and base color.",
     folderName: "03-CSS-Variables",
     tags: ["CSS Variables", "DOM", "Events"],
     difficulty: "Beginner",
