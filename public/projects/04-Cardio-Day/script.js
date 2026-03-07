@@ -33,6 +33,8 @@ console.table(bornIn15s);
 
 // Array.prototype.map()
 // 2. Give us an array of the inventors first and last names
+const arr = inventors.map(inventors.first + ' ' + inventors.last);
+console.table(arr);
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
